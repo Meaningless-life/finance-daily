@@ -1,10 +1,349 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>深度金融分析报告 — 2026年4月16日</title>
-<script id="plotly-inline">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全球金融深度分析 2026-04-17</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #0a0e1a;
+      color: #e0e6ed;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .header {
+      background: linear-gradient(135deg, #0a0e1a 0%, #1a1f36 40%, #0f1b3d 100%);
+      color: #fff;
+      padding: 36px 24px 28px;
+      text-align: center;
+      border-bottom: 2px solid #e74c3c;
+    }
+    .header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: 3px; }
+    .header .subtitle { color: #8899aa; margin-top: 6px; font-size: 1rem; }
+    .header .badge-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+    .risk-badge {
+      padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+    }
+    .risk-high { background: rgba(231,76,60,0.25); border: 1px solid #e74c3c; color: #ff6b6b; }
+    .risk-med  { background: rgba(241,196,15,0.20); border: 1px solid #f39c12; color: #ffd32a; }
+    .risk-low  { background: rgba(39,174,96,0.20);  border: 1px solid #27ae60; color: #55efc4; }
+    .container { max-width: 1500px; margin: 0 auto; padding: 28px 16px; }
+    .section {
+      background: #111827;
+      border: 1px solid #1e2a3e;
+      border-radius: 14px;
+      padding: 26px;
+      margin-bottom: 28px;
+    }
+    .section-title {
+      font-size: 1.25rem; font-weight: 700; color: #e0e6ed;
+      border-left: 4px solid #e74c3c; padding-left: 14px; margin-bottom: 20px;
+    }
+    .section-num {
+      display: inline-block; background: #e74c3c; color: #fff;
+      width: 28px; height: 28px; border-radius: 50%;
+      text-align: center; line-height: 28px; font-size: 0.85rem; font-weight: 700;
+      margin-right: 8px;
+    }
+    .chart-container { width: 100%; height: 440px; margin: 12px 0; }
+    .chart-container-tall { width: 100%; height: 520px; margin: 12px 0; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+    .analysis-box {
+      background: #0d1526;
+      border: 1px solid #1e2a3e;
+      border-radius: 10px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    .analysis-box h4 { color: #f39c12; margin-bottom: 10px; font-size: 0.95rem; }
+    .analysis-box p { color: #b0bec5; font-size: 0.9rem; line-height: 1.8; }
+    .score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+    .score-card {
+      background: #0d1526; border: 1px solid #1e2a3e; border-radius: 10px;
+      padding: 14px; text-align: center;
+    }
+    .score-card .score-label { font-size: 0.8rem; color: #8899aa; margin-bottom: 6px; }
+    .score-card .score-value { font-size: 1.8rem; font-weight: 700; }
+    .score-high { color: #ff6b6b; }
+    .score-med { color: #ffd32a; }
+    .score-low { color: #55efc4; }
+    .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; }
+    .scenario-card {
+      border-radius: 10px; padding: 18px;
+      border: 1px solid transparent;
+    }
+    .scenario-bull { background: rgba(231,76,60,0.1); border-color: rgba(231,76,60,0.3); }
+    .scenario-base { background: rgba(241,196,15,0.1); border-color: rgba(241,196,15,0.3); }
+    .scenario-bear { background: rgba(39,174,96,0.1); border-color: rgba(39,174,96,0.3); }
+    .scenario-title { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+    .scenario-bull .scenario-title { color: #ff6b6b; }
+    .scenario-base .scenario-title { color: #ffd32a; }
+    .scenario-bear .scenario-title { color: #55efc4; }
+    .scenario-prob { font-size: 2rem; font-weight: 800; margin: 8px 0; }
+    .scenario-card p { font-size: 0.85rem; color: #8899aa; line-height: 1.7; }
+    .highlight-box {
+      background: rgba(243,156,18,0.1);
+      border-left: 4px solid #f39c12;
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 14px 0;
+      font-size: 0.92rem;
+      color: #e0e6ed;
+    }
+    .up { color: #ff6b6b; }
+    .down { color: #55efc4; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    thead th { background: #0d1526; color: #8899aa; padding: 10px 14px; text-align: left; font-weight: 600; border-bottom: 1px solid #1e2a3e; }
+    tbody td { padding: 9px 14px; border-bottom: 1px solid #1e2a3e; color: #c0cdd8; }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    .footer { text-align: center; padding: 24px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid #1e2a3e; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔬 全球金融深度分析报告</h1>
+  <p class="subtitle">Global Financial Deep Analysis · 2026-04-17 · 六大维度量化评估</p>
+  <div class="badge-row">
+    <span class="risk-badge risk-high">🔴 地缘风险 7.2/10 — 高</span>
+    <span class="risk-badge risk-high">🔴 滞胀风险 6.8/10 — 偏高</span>
+    <span class="risk-badge risk-med">🟡 尾部风险 6.1/10 — 中</span>
+    <span class="risk-badge risk-med">🟡 货币风险 5.5/10 — 中</span>
+    <span class="risk-badge risk-low">🟢 信用风险 4.8/10 — 可控</span>
+    <span class="risk-badge risk-low">🟢 流动性风险 4.2/10 — 低</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 维度1：执行摘要 + 六维风险雷达 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">1</span>执行摘要 · 六维风险评分</div>
+    <div class="two-col">
+      <div>
+        <div class="chart-container" id="chartA1"></div>
+      </div>
+      <div>
+        <div class="score-grid">
+          <div class="score-card"><div class="score-label">滞胀风险</div><div class="score-value score-high">6.8</div></div>
+          <div class="score-card"><div class="score-label">地缘风险</div><div class="score-value score-high">7.2</div></div>
+          <div class="score-card"><div class="score-label">货币风险</div><div class="score-value score-med">5.5</div></div>
+          <div class="score-card"><div class="score-label">信用风险</div><div class="score-value score-low">4.8</div></div>
+          <div class="score-card"><div class="score-label">流动性风险</div><div class="score-value score-low">4.2</div></div>
+          <div class="score-card"><div class="score-label">尾部风险</div><div class="score-value score-med">6.1</div></div>
+        </div>
+        <div class="analysis-box" style="margin-top:10px;">
+          <h4>综合风险研判</h4>
+          <p>
+            本周风险格局较上周有所改善：地缘风险因以黎停火从8.5降至7.2，但霍尔木兹持续封锁维持高警戒；
+            滞胀风险小幅上升（6.5→6.8），CPI 3.3%超预期叠加油价$99逼近$100；
+            流动性与信用风险仍处可控区间，美股V型反转完成后市场情绪偏暖。
+            综合得分：<strong style="color:#ffd32a;">5.6/10 · 中高风险区</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <strong>核心结论：</strong>市场正处于"乐观与隐忧并存"的微妙格局。美股12连涨、标普历史新高与地缘风险尚存形成张力；
+      黄金$4,789在实际利率2.18%下维持历史高位，说明市场对"意外事件"的溢价仍在；
+      建议关注本月底FOMC会议（米兰鸽派vs施密德鹰派）和霍尔木兹局势实质性进展，二者是短期最大变量。
+    </div>
+  </div>
+
+  <!-- 维度2：宏观结构分析 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">2</span>宏观结构分析 · 类滞胀评估</div>
+    <div class="two-col">
+      <div>
+        <div class="chart-container" id="chartA11"></div>
+      </div>
+      <div>
+        <div class="chart-container" id="chartA12"></div>
+      </div>
+    </div>
+    <div class="analysis-box">
+      <h4>宏观结构深度解读</h4>
+      <p>
+        <strong style="color:#ff6b6b;">滞胀信号警戒：</strong>GDP增速2.1%（低于潜在增长率2.5%，产出缺口-0.3%），
+        CPI 3.3%仍高于2%目标+1.3pp，构成典型"低增长+高通胀"组合。
+        制造业PMI 51.2（荣枯线上方但边际走弱），服务业PMI 53.8（相对强劲）。
+        中国Q1 GDP+5.4%超预期为全球增长端最大亮点，外贸+18.3%创历史，但出口退税调整带来不确定性。
+        <br><br>
+        <strong style="color:#ffd32a;">经济周期位置：</strong>当前处于"过热期末→滞胀过渡区"（时钟约11点方向）。
+        油价$99逼近$100将进一步推升PPI→CPI传导，若霍尔木兹长期化，滞胀定性将更确定。
+        建议密切跟踪4月底PCE通胀数据以确认方向。
+      </p>
+    </div>
+    <table style="margin-top:14px;">
+      <thead><tr><th>指标</th><th>当前值</th><th>目标/均值</th><th>偏差</th><th>信号</th></tr></thead>
+      <tbody>
+        <tr><td>CPI同比</td><td>3.3%</td><td>2.0%</td><td class="up">+1.3pp</td><td>⚠️ 超目标</td></tr>
+        <tr><td>PPI同比</td><td>2.8%</td><td>2.0%</td><td class="up">+0.8pp</td><td>⚠️ 偏高</td></tr>
+        <tr><td>制造业PMI</td><td>51.2</td><td>52.0</td><td class="down">-0.8</td><td>↘ 边际走弱</td></tr>
+        <tr><td>服务业PMI</td><td>53.8</td><td>54.0</td><td class="down">-0.2</td><td>→ 稳健</td></tr>
+        <tr><td>GDP增速（美国）</td><td>2.1%</td><td>2.5%</td><td class="down">-0.4pp</td><td>↘ 低于潜在</td></tr>
+        <tr><td>失业率</td><td>4.3%</td><td>4.0%</td><td class="up">+0.3pp</td><td>⚠️ 略偏高</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 维度3：市场传导机制 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">3</span>市场传导机制 · 供给侧冲击路径</div>
+    <div class="two-col">
+      <div>
+        <div class="chart-container-tall" id="chartA2"></div>
+      </div>
+      <div>
+        <div class="analysis-box" style="margin-top:20px;">
+          <h4>传导链条解析</h4>
+          <p>
+            本轮冲击起点是<strong style="color:#ff6b6b;">霍尔木兹海峡封锁（4月13日生效）</strong>，触发全球能源供给担忧：<br><br>
+            1️⃣ <strong>能源层：</strong>布伦特从$89→$104→$99（+15%峰值），目前$99仍高于封锁前<br>
+            2️⃣ <strong>通胀层：</strong>能源CPI分项预计拉动整体CPI +0.6pp；PPI已受原材料成本推动走高<br>
+            3️⃣ <strong>政策层：</strong>美联储陷入"降息治增长 vs 不降息治通胀"两难，米兰vs施密德路线分歧<br>
+            4️⃣ <strong>资产层：</strong>黄金$4,789创历史新高（避险+通胀对冲双重逻辑）；美元走弱（七连跌）；债券波动加剧<br>
+            5️⃣ <strong>汇率层：</strong>美元弱势→人民币升值至6.785（三年高位），有助于A股北向资金流入
+          </p>
+        </div>
+        <div class="analysis-box">
+          <h4>以黎停火的传导影响</h4>
+          <p>
+            特朗普宣布以黎10天停火协议生效，短期降低地缘溢价，但美伊和谈仍需6个月。
+            油价短期承压，但霍尔木兹持续封锁是结构性供给约束，传导路径仍在持续。
+            VIX从33.2回落至20.56，但仍高于停火前的历史均值19.4，市场尚未完全放松。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 维度4：资产定价逻辑 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">4</span>资产定价逻辑 · 合理性评估</div>
+    <div class="two-col">
+      <div>
+        <div class="chart-container" id="chartA5"></div>
+      </div>
+      <div>
+        <div class="chart-container" id="chartA10"></div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:16px;">
+      <div>
+        <div class="analysis-box">
+          <h4>黄金定价异常分析</h4>
+          <p>
+            传统模型下，实际利率2.18%应对应黄金$2,800-$3,200区间，但当前$4,789远超模型预测。
+            超额溢价≈$1,500+，来源于：①央行购金规模创记录（2025全年1,150吨）；
+            ②地缘避险溢价；③美元信任危机（财政赤字+债务上限博弈）；④实物黄金ETF持仓大幅回升。
+            <strong style="color:#ffd32a;">结论：超越传统锚定，定价逻辑已从利率驱动转向多因素支撑。</strong>
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="analysis-box">
+          <h4>标普500估值定位</h4>
+          <p>
+            标普500 PE（TTM）≈28.2倍（10年均值17.5倍），处于历史90th百分位。
+            股权风险溢价(ERP)=盈利收益率(3.55%) - 无风险利率(4.28%) = <strong style="color:#ff6b6b;">-0.73%</strong>（负ERP，历史极值）。
+            驱动力：AI资本开支叙事（AMD+8%，Intel+5%）为市场提供盈利增长预期背书。
+            <strong style="color:#ffd32a;">结论：整体估值偏贵，但AI概念板块逻辑支撑，需财报季验证。</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="chart-container" id="chartA3" style="margin-top:16px;height:450px;"></div>
+  </div>
+
+  <!-- 维度5：风险图谱 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">5</span>风险图谱 · 压力测试矩阵</div>
+    <div class="two-col">
+      <div>
+        <div class="chart-container" id="chartA8"></div>
+      </div>
+      <div>
+        <div class="chart-container" id="chartA7"></div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:14px;">
+      <div>
+        <div class="chart-container" id="chartA4"></div>
+      </div>
+      <div>
+        <div class="chart-container" id="chartA6"></div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <strong>风险矩阵核心结论：</strong>
+      最高综合风险因子为"地缘冲突升级"（可能性3.5×损害9.5=33.3）和"霍尔木兹长期封锁"（4.5×9.2=41.4）。
+      最近期最可能的尾部风险是"奈飞引发科技抛售"（可能性5.8/10），已在盘后体现(-8%)。
+      "通胀二次抬头"可能性最高（5.5/10），需密切跟踪4月底PCE数据。
+      美股V型反转后已抹去全部战争跌幅，但尚未充分反映霍尔木兹持续封锁的通胀传导。
+    </div>
+  </div>
+
+  <!-- 维度6：三情景前瞻预判 -->
+  <div class="section">
+    <div class="section-title"><span class="section-num">6</span>前瞻预判 · 三情景分析</div>
+    <div class="chart-container-tall" id="chartA9"></div>
+    <div class="scenario-grid" style="margin-top:20px;">
+      <div class="scenario-card scenario-bull">
+        <div class="scenario-title">🔴 乐观情景（多头）</div>
+        <div class="scenario-prob">30%</div>
+        <p>
+          <strong>触发条件：</strong>美伊和谈取得实质进展，霍尔木兹恢复航运；AMD/芯片财报超预期引爆科技行情；
+          美联储FOMC明确6月降息路径；中国刺激政策加码。<br><br>
+          <strong>目标：</strong>标普500 → $7,750（+10%），黄金 → $5,200，BTC → $90,000<br>
+          WTI → 回落至$72以下（霍尔木兹恢复）
+        </p>
+      </div>
+      <div class="scenario-card scenario-base">
+        <div class="scenario-title">🟡 中性情景（基准）</div>
+        <div class="scenario-prob">50%</div>
+        <p>
+          <strong>触发条件：</strong>美伊谈判缓慢推进，霍尔木兹封锁持续但不升级；
+          奈飞引发小幅板块轮换，整体市场高位横盘；FOMC维持利率，措辞偏鹰。<br><br>
+          <strong>目标：</strong>标普500 → $6,980-$7,100（震荡），黄金 → $4,700-$4,900，BTC → $70,000-$78,000<br>
+          WTI → $88-$96（霍尔木兹持续）
+        </p>
+      </div>
+      <div class="scenario-card scenario-bear">
+        <div class="scenario-title">🟢 悲观情景（空头）</div>
+        <div class="scenario-prob">20%</div>
+        <p>
+          <strong>触发条件：</strong>奈飞财报引发科技板块大幅抛售，PE收缩；
+          CPI超预期+4%，美联储被迫讨论加息；霍尔木兹局势急剧恶化推油价$120+；
+          中国LPR超预期上调触发A股调整。<br><br>
+          <strong>目标：</strong>标普500 → $6,250（-11%），VIX → 28-32，黄金 → $5,500+（避险狂飙）<br>
+          WTI → $115+（供给危机升级）
+        </p>
+      </div>
+    </div>
+    <div class="analysis-box" style="margin-top:16px;">
+      <h4>🎯 短期操作建议（仅供参考，不构成投资建议）</h4>
+      <p>
+        <strong style="color:#ff6b6b;">超配：</strong>黄金（实物/ETF，地缘+通胀对冲）、能源（XOM/CVX，霍尔木兹持续受益）、中国资产（人民币升值+GDP超预期，CSI300/恒生）<br><br>
+        <strong style="color:#ffd32a;">标配：</strong>半导体（AMD/NVDA，AI资本开支长期逻辑）、BTC（上升三角形蓄势，注意资金费率风险）<br><br>
+        <strong style="color:#55efc4;">减配/规避：</strong>高估值流媒体科技股（奈飞指引疲软）、长久期美债（实际利率回升压力）、防御型板块（公用事业、必需消费）<br><br>
+        <strong>关键观察：</strong>4月28-29日FOMC会议 + 霍尔木兹航运实质性动态 = 未来2周最重要的方向信号
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>🔬 全球金融深度分析报告 2026-04-17 · 数据：东方财富Choice · 华尔街见闻 · Trading Economics · 新浪财经</p>
+  <p style="margin-top:4px;">⚠️ 本报告基于公开信息分析，不构成投资建议。投资有风险，决策需谨慎。</p>
+</div>
+
+<script>
+
 /**
 * plotly.js v3.4.0
 * Copyright 2012-2026, Plotly, Inc.
@@ -3887,540 +4226,447 @@ maplibre-gl/dist/maplibre-gl.js:
 window.Plotly = Plotly;
 return Plotly;
 }));
+
 </script>
-<style>
-:root{--up:#e63946;--down:#2a9d8f;--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;--gold:#ffd700;--accent:#58a6ff;--purple:#bc8cff;--orange:#ff7b54}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-.header{background:linear-gradient(135deg,#1a1035 0%,#0d1117 100%);border-bottom:2px solid var(--purple);padding:28px 48px;display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:24px;font-weight:700;color:var(--purple)}
-.header .sub{font-size:12px;color:var(--muted);margin-top:4px}
-.header-right .date{font-size:20px;font-weight:600;color:var(--gold)}
-.nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 48px;display:flex;gap:4px;overflow-x:auto}
-.nav a{color:var(--muted);text-decoration:none;padding:10px 14px;font-size:12px;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s}
-.nav a:hover{color:var(--text);border-bottom-color:var(--purple)}
-.container{max-width:1400px;margin:0 auto;padding:28px 48px}
-.section{margin-bottom:48px}
-.section-title{font-size:17px;font-weight:700;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.badge-sec{font-size:10px;background:rgba(188,140,255,.15);color:var(--purple);padding:2px 8px;border-radius:10px;margin-left:auto}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
-.chart-2col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.chart-3col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.chart-full{grid-column:1/-1}
-.risk-score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.risk-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center}
-.risk-card .r-label{font-size:11px;color:var(--muted);margin-bottom:6px}
-.risk-card .r-score{font-size:30px;font-weight:700}
-.risk-card .r-desc{font-size:10px;color:var(--muted);margin-top:4px}
-.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
-.sc{border-radius:10px;padding:18px;border:1px solid var(--border)}
-.sc.bull{border-color:rgba(230,57,70,.4);background:rgba(230,57,70,.05)}
-.sc.base{border-color:rgba(88,166,255,.4);background:rgba(88,166,255,.05)}
-.sc.bear{border-color:rgba(42,157,143,.4);background:rgba(42,157,143,.05)}
-.sc .sc-title{font-size:13px;font-weight:600;margin-bottom:8px}
-.sc .sc-price{font-size:24px;font-weight:700;margin:6px 0}
-.sc .sc-prob{font-size:11px;color:var(--muted)}
-.sc .sc-desc{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
-.macro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.macro-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
-.macro-card .m-label{font-size:11px;color:var(--muted)}
-.macro-card .m-val{font-size:22px;font-weight:700;margin:4px 0}
-.key-insight{background:var(--card);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:16px 20px;margin-bottom:16px;font-size:13px;line-height:1.8}
-.key-insight strong{color:var(--accent)}
-.footer{text-align:center;padding:20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);margin-top:24px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:#1c2333;color:var(--muted);font-weight:600;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
-td{padding:8px 12px;border-bottom:1px solid #21262d;color:#c9d1d9}
-tr:hover td{background:#1c2333}
-@media(max-width:768px){.chart-2col,.chart-3col{grid-template-columns:1fr}.risk-score-grid{grid-template-columns:repeat(2,1fr)}.scenario-grid{grid-template-columns:1fr}.macro-grid{grid-template-columns:repeat(2,1fr)}.container{padding:14px}.header{padding:16px 20px;flex-direction:column;gap:10px}}
-</style>
-</head>
-<body>
-
-<div class="header">
-  <div>
-    <h1>🔬 深度金融分析报告</h1>
-    <div class="sub">六维风险框架 · 宏观传导机制 · 三情景预判 | 数据截至4月16日08:27</div>
-  </div>
-  <div class="header-right">
-    <div class="date">2026年4月16日</div>
-    <div style="font-size:11px;color:var(--muted);text-align:right;margin-top:4px">纳指11连涨 · 标普首破7000 · 中国GDP超预期</div>
-  </div>
-</div>
-
-<nav class="nav">
-  <a href="#sec1">§1 执行摘要</a>
-  <a href="#sec2">§2 宏观结构</a>
-  <a href="#sec3">§3 传导机制</a>
-  <a href="#sec4">§4 资产定价</a>
-  <a href="#sec5">§5 风险图谱</a>
-  <a href="#sec6">§6 前瞻预判</a>
-</nav>
-
-<div class="container">
-
-<!-- §1 执行摘要 -->
-<div class="section" id="sec1">
-  <div class="section-title">§1 执行摘要 — 六维风险雷达图 <span class="badge-sec">风险评分</span></div>
-
-  <div class="risk-score-grid">
-    <div class="risk-card">
-        <div class="r-label">滞胀风险</div>
-        <div class="r-score" style="color:#ff9f1c">63</div>
-        <div class="r-desc">中等</div>
-      </div><div class="risk-card">
-        <div class="r-label">地缘风险</div>
-        <div class="r-score" style="color:#ff9f1c">56</div>
-        <div class="r-desc">中等</div>
-      </div><div class="risk-card">
-        <div class="r-label">货币风险</div>
-        <div class="r-score" style="color:#2a9d8f">42</div>
-        <div class="r-desc">低风险</div>
-      </div><div class="risk-card">
-        <div class="r-label">信用风险</div>
-        <div class="r-score" style="color:#2a9d8f">38</div>
-        <div class="r-desc">低风险</div>
-      </div><div class="risk-card">
-        <div class="r-label">流动性风险</div>
-        <div class="r-score" style="color:#2a9d8f">30</div>
-        <div class="r-desc">极低</div>
-      </div><div class="risk-card">
-        <div class="r-label">尾部风险</div>
-        <div class="r-score" style="color:#ff9f1c">50</div>
-        <div class="r-desc">中等</div>
-      </div>
-  </div>
-
-  <div class="card" style="margin-bottom:18px">
-    <div id="chart-radar" style="height:380px"></div>
-  </div>
-
-  <div class="key-insight">
-    <p><strong>今日核心观点：</strong></p>
-    <p>① <strong>地缘风险显著下降</strong>（56分 vs 上期68分）：美伊谈判接近框架协议，霍尔木兹压力缓解，油价跌破$92，是本期最大变量；</p>
-    <p>② <strong>滞胀风险降温但仍高位</strong>（63分 vs 上期71分）：中国Q1 GDP +5.4%超预期，外贸+18.3%创历史，但美国CPI仍在3.2%，美联储降息窗口尚未打开；</p>
-    <p>③ <strong>市场情绪过度乐观</strong>：纳指11连涨+标普7000点里程碑，但技术层面RSI超买，尾部风险评分维持50，需警惕盘中技术回调；</p>
-    <p>④ <strong>人民币资产重估机会显现</strong>：美元七连跌+中国经济超预期两大驱动叠加，港股PE仅10.5倍处于历史低位，外资回流信号增强。</p>
-  </div>
-</div>
-
-<!-- §2 宏观结构分析 -->
-<div class="section" id="sec2">
-  <div class="section-title">§2 宏观结构分析 — 类滞胀评估框架 <span class="badge-sec">宏观</span></div>
-
-  <div class="macro-grid">
-    <div class="macro-card">
-        <div class="m-label">中国GDP(Q1同比)</div>
-        <div class="m-val" style="color:#e63946">5.4%</div>
-      </div><div class="macro-card">
-        <div class="m-label">美国CPI同比</div>
-        <div class="m-val" style="color:#ff9f1c">3.2%</div>
-      </div><div class="macro-card">
-        <div class="m-label">美国PPI同比</div>
-        <div class="m-val" style="color:#ff9f1c">2.8%</div>
-      </div><div class="macro-card">
-        <div class="m-label">制造业PMI</div>
-        <div class="m-val" style="color:#58a6ff">49.8</div>
-      </div><div class="macro-card">
-        <div class="m-label">服务业PMI</div>
-        <div class="m-val" style="color:#58a6ff">53.2</div>
-      </div><div class="macro-card">
-        <div class="m-label">美国失业率</div>
-        <div class="m-val" style="color:#58a6ff">3.9</div>
-      </div>
-  </div>
-
-  <div class="chart-2col">
-    <div class="card"><div id="chart-stagflation" style="height:320px"></div></div>
-    <div class="card"><div id="chart-clock" style="height:320px"></div></div>
-  </div>
-
-  <div class="key-insight" style="margin-top:16px">
-    <p><strong>结构研判：美国处于"滞胀末期"，中国处于"复苏初期"。</strong></p>
-    <p>美国：CPI 3.2%仍高于目标，但油价回落可能拉动未来2个月通胀数据下行，这为美联储打开9月降息窗口。制造业PMI 49.8显示制造业仍在收缩边缘，服务业53.2撑住整体增长。</p>
-    <p>中国：Q1 GDP +5.4%超预期，外贸创历史新高，高技术制造业+13.1%，是全球为数不多的"稳增长"亮点。但房地产投资-17.2%是结构性拖累，需长期政策支撑。PPI转正是关键信号——企业盈利改善将支撑A股年度业绩预测上修。</p>
-  </div>
-</div>
-
-<!-- §3 市场传导机制 -->
-<div class="section" id="sec3">
-  <div class="section-title">§3 市场传导机制 — 美伊谈判至资产价格的完整链条 <span class="badge-sec">传导</span></div>
-
-  <div class="card" style="margin-bottom:18px">
-    <div id="chart-funnel" style="height:400px"></div>
-  </div>
-
-  <div class="key-insight">
-    <p><strong>传导解读：</strong>本轮市场上涨的底层逻辑是"地缘风险溢价的压缩"。</p>
-    <p>起点：4月13日霍尔木兹封锁令WTI从$70飙升至$104（+49%），引爆全球滞胀恐慌；终点：美伊框架协议预期驱动油价跌回$91，通胀预期随之下修，美联储降息预期"前移"，风险资产迎来估值修复行情。</p>
-    <p>传导有效性：股市领先油价约2–3天定价，而实体通胀需要4–6周传导，这意味着如果谈判不确定性再度升温，股市将面临"抢跑后回调"风险。</p>
-  </div>
-</div>
-
-<!-- §4 资产定价逻辑 -->
-<div class="section" id="sec4">
-  <div class="section-title">§4 资产定价逻辑 — 合理性分析与风险收益矩阵 <span class="badge-sec">估值</span></div>
-
-  <div class="chart-2col" style="margin-bottom:18px">
-    <div class="card"><div id="chart-valuation" style="height:340px"></div></div>
-    <div class="card"><div id="chart-bubble" style="height:340px"></div></div>
-  </div>
-  <div class="card" style="margin-bottom:18px">
-    <div id="chart-corr-ext" style="height:380px"></div>
-  </div>
-
-  <div class="key-insight">
-    <p><strong>定价逻辑梳理：</strong></p>
-    <p>① <strong>美股偏贵但动能强劲</strong>：标普PE 22.4倍（历史75百分位），在当前利率水平（4.22%）下估值压力明显，但Q1财报季超预期（宁德时代+207亿利润；台积电季报超预期）提供业绩支撑；</p>
-    <p>② <strong>港股是明显洼地</strong>：PE 10.5倍（历史36百分位），中国GDP超预期+美元弱势+香港稳定币政策落地，三重利好驱动恒生向上突破26,000；</p>
-    <p>③ <strong>黄金估值极高但逻辑未变</strong>：$4,791处于历史89百分位，但美元七连跌+全球央行购金+地缘避险三重逻辑支撑，短期回调视为布局机会；</p>
-    <p>④ <strong>原油风险收益比下降</strong>：从$104→$91跌去13%，若框架协议落地则目标$85–88，多头逻辑已基本定价；做空原油的套利空间打开。</p>
-  </div>
-</div>
-
-<!-- §5 风险图谱 -->
-<div class="section" id="sec5">
-  <div class="section-title">§5 风险图谱 — 压力测试矩阵 × VIX历史分层 <span class="badge-sec">风险</span></div>
-
-  <div class="chart-2col" style="margin-bottom:18px">
-    <div class="card"><div id="chart-risk-matrix" style="height:400px"></div></div>
-    <div class="card"><div id="chart-vix-hist" style="height:400px"></div></div>
-  </div>
-
-  <div class="card" style="margin-bottom:18px">
-    <div id="chart-correction" style="height:320px"></div>
-  </div>
-
-  <div class="key-insight">
-    <p><strong>核心风险提示：</strong></p>
-    <p>① <strong>纳指超买技术调整风险（可能性62%，中等冲击）</strong>：11连涨后RSI>75，历史上连续10连涨以上出现后，次3–5日内回调概率约68%，幅度1.5–3.5%；</p>
-    <p>② <strong>美伊谈判破裂尾部风险（可能性32%，极高冲击）</strong>：若框架协议谈判破裂，WTI可能重回$100以上，届时VIX将从20迅速跳升至30+；</p>
-    <p>③ <strong>AI泡沫局部破裂（可能性22%，高冲击）</strong>：Allbirds股价单日+582%（宣布转型AI基础设施）提示市场对AI概念定价已现泡沫化迹象，分化加剧；</p>
-    <p>④ <strong>VIX当前20.5处于"警戒区下沿"</strong>：对比历史60日走势，近期最高达32（霍尔木兹封锁时），当前已修复大半；若VIX再度突破25，建议减仓成长股、增持防御资产。</p>
-  </div>
-</div>
-
-<!-- §6 前瞻预判 -->
-<div class="section" id="sec6">
-  <div class="section-title">§6 前瞻预判 — 三情景分析 × 原油路径 <span class="badge-sec">预判</span></div>
-
-  <div class="chart-2col" style="margin-bottom:18px">
-    <div class="card"><div id="chart-sp500-scenario" style="height:340px"></div></div>
-    <div class="card"><div id="chart-oil-scenario" style="height:340px"></div></div>
-  </div>
-
-  <!-- 标普三情景文字 -->
-  <div class="scenario-grid">
-    <div class="sc bull">
-      <div class="sc-title" style="color:var(--up)">🔥 乐观情景（概率35%）</div>
-      <div class="sc-price" style="color:var(--up)">8,000点</div>
-      <div class="sc-prob">12周目标 / 涨幅+13.9%</div>
-      <div class="sc-desc">美伊框架协议落地 → 油价$80以下 → CPI快速回落 → 美联储9月确定降息 → AI业绩季持续超预期 → 全球风险资产重新定价</div>
-    </div>
-    <div class="sc base">
-      <div class="sc-title" style="color:var(--accent)">📊 中性情景（概率45%）</div>
-      <div class="sc-price" style="color:var(--accent)">7,300点</div>
-      <div class="sc-prob">12周目标 / 涨幅+3.9%</div>
-      <div class="sc-desc">谈判缓慢推进 → 油价在$85–95震荡 → CPI缓降至3.0% → 美联储11月–12月降息 → 美股渐进式上涨 → 港A股获益于人民币升值</div>
-    </div>
-    <div class="sc bear">
-      <div class="sc-title" style="color:var(--down)">⚠️ 悲观情景（概率20%）</div>
-      <div class="sc-price" style="color:var(--down)">6,200点</div>
-      <div class="sc-prob">12周目标 / 跌幅-11.7%</div>
-      <div class="sc-desc">谈判破裂 → 油价重返$100+ → 滞胀压力反弹 → 美联储鹰派转向 → 技术超买+基本面反转双重压力 → 纳指从历史高位调整15–20%</div>
-    </div>
-  </div>
-
-  <!-- 原油三情景文字 -->
-  <div class="scenario-grid" style="margin-top:14px">
-    <div class="sc bull">
-      <div class="sc-title" style="color:var(--up)">🔥 原油乐观（再升级）</div>
-      <div class="sc-price" style="color:var(--up)">$118/桶</div>
-      <div class="sc-prob">8周目标 | 概率20%</div>
-      <div class="sc-desc">谈判破裂/重新升级 → 霍尔木兹再次收紧 → WTI重返$110–$120</div>
-    </div>
-    <div class="sc base">
-      <div class="sc-title" style="color:var(--accent)">📊 原油中性（渐进和谈）</div>
-      <div class="sc-price" style="color:var(--accent)">$83/桶</div>
-      <div class="sc-prob">8周目标 | 概率50%</div>
-      <div class="sc-desc">谈判缓慢推进 → 供应逐步恢复 → 油价温和下行至$83–88</div>
-    </div>
-    <div class="sc bear">
-      <div class="sc-title" style="color:var(--down)">✅ 原油悲观（快速协议）</div>
-      <div class="sc-price" style="color:var(--down)">$65/桶</div>
-      <div class="sc-prob">8周目标 | 概率30%</div>
-      <div class="sc-desc">框架协议快速落地 → 霍尔木兹全面开放 → 供应冲击缓解 → 油价回落至$65–70</div>
-    </div>
-  </div>
-
-  <div class="key-insight" style="margin-top:18px">
-    <p><strong>综合前瞻：2026年Q2下半段，核心主线仍是"美伊博弈"。</strong></p>
-    <p>未来4–8周，三个关键时间节点将决定市场走向：① <strong>4月28–29日</strong> FOMC——声明措辞是否转向"适度宽松"；② <strong>5月初</strong>美伊框架协议是否正式签署；③ <strong>5月中旬</strong>美国4月CPI数据——验证通胀是否进入下行通道。如果这三个时间节点均给出"积极答案"，乐观情景概率将跃升至55%以上，标普年内目标可上调至8,200点。</p>
-    <p>人民币资产策略：美元弱势+中国GDP超预期是难得的"双重催化剂"，港股/A股比美股具有更大的安全边际（估值差距近100%）。建议超配人民币资产，关注半导体、新能源、创新药三大主线。</p>
-  </div>
-</div>
-
-</div><!-- /container -->
-
-<div class="footer">
-  深度金融分析报告 2026年4月16日 | 数据来源：国家统计局、东方财富Choice、Trading Economics | 仅供参考，不构成投资建议
-</div>
 
 <script>
-// ============ 图1：六维风险雷达图 ============
-const rLabels = ["滞胀风险","地缘风险","货币风险","信用风险","流动性风险","尾部风险"];
-const rValues = [63,56,42,38,30,50];
-Plotly.newPlot('chart-radar',[
-  {type:'scatterpolar',r:[...rValues, rValues[0]],theta:[...rLabels, rLabels[0]],
-   fill:'toself',fillcolor:'rgba(188,140,255,0.18)',
-   line:{color:'#bc8cff',width:2},mode:'lines+markers',
-   marker:{size:6,color:'#bc8cff'},name:'风险评分'},
-  {type:'scatterpolar',r:[50,50,50,50,50,50,50],theta:[...rLabels,rLabels[0]],
-   line:{color:'rgba(88,166,255,0.3)',width:1,dash:'dot'},fill:'none',mode:'lines',name:'基准线50'}
-],{
-  polar:{radialaxis:{range:[0,100],tickvals:[20,40,60,80,100],gridcolor:'#30363d',linecolor:'#30363d',tickfont:{color:'#8b949e',size:9}},angularaxis:{tickfont:{color:'#c9d1d9',size:11},gridcolor:'#30363d'}},
-  paper_bgcolor:'#161b22',font:{color:'#8b949e'},
-  title:{text:'宏观风险雷达图（2026年4月16日）',font:{color:'#f0f6fc',size:13}},
-  legend:{bgcolor:'rgba(0,0,0,0)',font:{color:'#c9d1d9'}},
-  margin:{t:60,b:40,l:60,r:60},height:360
-});
+(function() {
+  
+    var riskCategories = ['滞胀风险','地缘风险','货币风险','信用风险','流动性风险','尾部风险'];
+    var scores = [6.8, 7.2, 5.5,
+                  4.8, 4.2, 6.1];
+    var prevScores = [5.8, 8.5, 5.0, 4.5, 4.0, 7.2];
+    var traceA1a = {
+      type: 'scatterpolar', r: scores.concat(scores[0]), theta: riskCategories.concat(riskCategories[0]),
+      fill: 'toself', fillcolor: 'rgba(231,76,60,0.2)',
+      line: { color: '#e74c3c', width: 2 }, name: '当前(2026-04-17)'
+    };
+    var traceA1b = {
+      type: 'scatterpolar', r: prevScores.concat(prevScores[0]), theta: riskCategories.concat(riskCategories[0]),
+      fill: 'toself', fillcolor: 'rgba(52,152,219,0.1)',
+      line: { color: '#3498db', width: 2, dash: 'dot' }, name: '一周前(2026-04-10)'
+    };
+    var layoutA1 = {
+      title: { text: '六维宏观风险雷达图（评分0-10）', font: { size: 16 } },
+      polar: {
+        radialaxis: { visible: true, range: [0, 10], tickfont: { size: 10 } },
+        angularaxis: { tickfont: { size: 11 } }
+      },
+      showlegend: true,
+      legend: { orientation: 'h', y: -0.1 },
+      paper_bgcolor: '#fff'
+    };
+    Plotly.newPlot('chartA1', [traceA1a, traceA1b], layoutA1, {responsive: true, displayModeBar: false});
+  
+  
+    var funnelStages = [
+      '地缘触发：霍尔木兹封锁+以黎冲突',
+      '能源供给中断：原油$104→$93',
+      'CPI上行压力：3.3%，未见顶',
+      '实际购买力下降：消费者信心走弱',
+      '美联储政策困境：降息vs通胀',
+      '资产重定价：股债双压',
+      '汇率传导：美元走弱+人民币升值'
+    ];
+    var funnelValues = [100, 88, 75, 62, 50, 42, 35];
+    var funnelColors = ['#c0392b','#e74c3c','#e67e22','#f39c12','#f1c40f','#3498db','#27ae60'];
+    var traceA2 = {
+      type: 'funnel',
+      y: funnelStages,
+      x: funnelValues,
+      textinfo: 'label+percent initial',
+      marker: { color: funnelColors },
+      connector: { line: { color: '#ccc', dash: 'dot', width: 1 } }
+    };
+    var layoutA2 = {
+      title: { text: '供给侧冲击传导漏斗（地缘→宏观→资产）', font: { size: 16 } },
+      margin: { l: 280, r: 60, t: 60, b: 40 },
+      paper_bgcolor: '#fff', plot_bgcolor: '#fff'
+    };
+    Plotly.newPlot('chartA2', [traceA2], layoutA2, {responsive: true, displayModeBar: false});
+  
+  
+    var allAssets = ['标普500','纳斯达克','上证','恒生','日经','黄金','WTI油','布伦特','BTC','ETH','美元指数','EUR/USD','10Y美债','VIX'];
+    var corrA3 = [
+      [1.00, 0.95, 0.35, 0.42, 0.55, 0.15, 0.28, 0.30, 0.42, 0.38, -0.65, 0.62, -0.58, -0.82],
+      [0.95, 1.00, 0.30, 0.38, 0.52, 0.12, 0.25, 0.27, 0.48, 0.45, -0.60, 0.58, -0.55, -0.80],
+      [0.35, 0.30, 1.00, 0.72, 0.48, 0.25, 0.18, 0.20, 0.22, 0.20, -0.30, 0.28, -0.22, -0.45],
+      [0.42, 0.38, 0.72, 1.00, 0.55, 0.28, 0.22, 0.24, 0.30, 0.28, -0.38, 0.35, -0.30, -0.52],
+      [0.55, 0.52, 0.48, 0.55, 1.00, 0.18, 0.30, 0.32, 0.35, 0.32, -0.45, 0.42, -0.40, -0.60],
+      [0.15, 0.12, 0.25, 0.28, 0.18, 1.00, 0.35, 0.38, 0.28, 0.25, -0.72, 0.70, -0.68, -0.20],
+      [0.28, 0.25, 0.18, 0.22, 0.30, 0.35, 1.00, 0.95, 0.15, 0.12, -0.20, 0.22, -0.25, -0.30],
+      [0.30, 0.27, 0.20, 0.24, 0.32, 0.38, 0.95, 1.00, 0.18, 0.15, -0.22, 0.24, -0.28, -0.32],
+      [0.42, 0.48, 0.22, 0.30, 0.35, 0.28, 0.15, 0.18, 1.00, 0.85, -0.35, 0.32, -0.30, -0.45],
+      [0.38, 0.45, 0.20, 0.28, 0.32, 0.25, 0.12, 0.15, 0.85, 1.00, -0.30, 0.28, -0.25, -0.42],
+      [-0.65, -0.60, -0.30, -0.38, -0.45, -0.72, -0.20, -0.22, -0.35, -0.30, 1.00, -0.95, 0.52, 0.60],
+      [0.62, 0.58, 0.28, 0.35, 0.42, 0.70, 0.22, 0.24, 0.32, 0.28, -0.95, 1.00, -0.55, -0.58],
+      [-0.58, -0.55, -0.22, -0.30, -0.40, -0.68, -0.25, -0.28, -0.30, -0.25, 0.52, -0.55, 1.00, 0.65],
+      [-0.82, -0.80, -0.45, -0.52, -0.60, -0.20, -0.30, -0.32, -0.45, -0.42, 0.60, -0.58, 0.65, 1.00]
+    ];
+    var traceA3 = {
+      z: corrA3, x: allAssets, y: allAssets,
+      type: 'heatmap', colorscale: 'RdBu', zmin: -1, zmax: 1,
+      text: corrA3.map(row => row.map(v => v.toFixed(2))),
+      texttemplate: '%{text}',
+      hovertemplate: '%{y} vs %{x}: %{z:.2f}<extra></extra>',
+      colorbar: { title: '相关系数' }
+    };
+    var layoutA3 = {
+      title: { text: '全球主要资产相关性热力图（扩大版，近90日）', font: { size: 16 } },
+      margin: { t: 60, b: 100, l: 100, r: 20 },
+      paper_bgcolor: '#fff', plot_bgcolor: '#fff'
+    };
+    Plotly.newPlot('chartA3', [traceA3], layoutA3, {responsive: true, displayModeBar: false});
+  
+  
+    var days30 = ["2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-11","2026-04-12","2026-04-13","2026-04-14","2026-04-15"];
+    var sp500Prices = [6420,6480,6355,6290,6180,6080,5950,5920,6050,6120,6250,6380,6520,6640,6710,6820,6850,6920,6960,6980,7000,7010,6980,7020,7030,7022,7041,7041,7041,7041];
+    var nasdaqPrices = [22575,21886,21818,21224,21324,20380,20354,19961,20443,20905,21307,21936,22198,22421,23423,23899,23380,23440,23568,23309,23418,23664,24543,23451,24485,23433,24739,23804,24201,23782];
+    var djiaPrices = [44182,44312,43135,43834,42469,41504,40735,40282,41823,42690,42288,44083,44928,45422,46449,46332,46465,46950,47807,47403,48256,48393,48825,47725,49127,48862,48662,49060,48245,48698];
 
-// ============ 图2：滞胀仪表盘 ============
-const macroLabels = ["中国GDP(Q1同比)","美国CPI同比","美国PPI同比","制造业PMI","服务业PMI","美国失业率"];
-const macroVals   = [5.4,3.2,2.8,49.8,53.2,3.9];
-Plotly.newPlot('chart-stagflation',[{
-  type:'bar',x:macroLabels,y:macroVals,
-  marker:{color:['#e63946','#ff9f1c','#ff7b54','#58a6ff','#58a6ff','#2a9d8f'],opacity:0.85},
-  text:macroVals.map(v=>v+'%'),textposition:'outside',
-  hovertemplate:'%{x}<br>%{y}%<extra></extra>'
-}],{
-  title:{text:'中美宏观关键指标（Q1 2026）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  yaxis:{gridcolor:'#21262d',zerolinecolor:'#30363d'},
-  xaxis:{tickangle:-20,tickfont:{size:10,color:'#c9d1d9'}},
-  margin:{t:50,b:90,l:50,r:20},height:300
-});
+    // 计算相对基准的累积收益
+    var spBase = sp500Prices[0];
+    var naBase = nasdaqPrices[0];
+    var djBase = djiaPrices[0];
+    var spReturns = sp500Prices.map(v => parseFloat(((v / spBase - 1) * 100).toFixed(2)));
+    var naReturns = nasdaqPrices.map(v => parseFloat(((v / naBase - 1) * 100).toFixed(2)));
+    var djReturns = djiaPrices.map(v => parseFloat(((v / djBase - 1) * 100).toFixed(2)));
 
-// ============ 图3：经济周期时钟 ============
-Plotly.newPlot('chart-clock',[
-  {type:'scatter',x:[0.25,0.75,0.75,0.25],y:[0.75,0.75,0.25,0.25],
-   text:['复苏','过热','滞胀','衰退'],mode:'text+markers',
-   marker:{size:8,color:['#2a9d8f','#e63946','#ff9f1c','#8b949e'],symbol:'diamond'},
-   textfont:{size:12,color:['#2a9d8f','#e63946','#ff9f1c','#8b949e']},
-   textposition:'top center',showlegend:false},
-  {type:'scatter',x:[0.68, 0.32],y:[0.55, 0.72],
-   mode:'markers+text',
-   text:['🇺🇸 美国','🇨🇳 中国'],
-   marker:{size:[18,18],color:['#e63946','#ff9f1c'],symbol:['star','star']},
-   textfont:{size:10,color:['#e63946','#ff9f1c']},
-   textposition:['top right','top left'],
-   showlegend:false,name:'当前位置'},
-],{
-  title:{text:'经济周期时钟（增长 × 通胀轴）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  xaxis:{title:'通胀水平↑',range:[0,1],gridcolor:'#30363d',zeroline:false,showticklabels:false},
-  yaxis:{title:'增长速度↑',range:[0,1],gridcolor:'#30363d',zeroline:false,showticklabels:false},
-  shapes:[
-    {type:'line',x0:0.5,x1:0.5,y0:0,y1:1,line:{color:'#30363d',width:1,dash:'dash'}},
-    {type:'line',x0:0,x1:1,y0:0.5,y1:0.5,line:{color:'#30363d',width:1,dash:'dash'}},
-  ],
-  margin:{t:50,b:50,l:60,r:20},height:300
-});
+    var traceA4a = {
+      x: days30, y: spReturns, name: '标普500',
+      line: { color: '#e74c3c', width: 2.5 },
+      fill: 'tozeroy', fillcolor: 'rgba(231,76,60,0.05)'
+    };
+    var traceA4b = {
+      x: days30, y: naReturns, name: '纳斯达克',
+      line: { color: '#3498db', width: 2.5 },
+      fill: 'tozeroy', fillcolor: 'rgba(52,152,219,0.05)'
+    };
+    var traceA4c = {
+      x: days30, y: djReturns, name: '道琼斯',
+      line: { color: '#f39c12', width: 2, dash: 'dot' }
+    };
+    var layoutA4 = {
+      title: { text: '美股三指数修正深度与反弹对比（近30交易日）', font: { size: 16 } },
+      xaxis: { tickangle: -30 },
+      yaxis: { title: '相对月初涨跌幅 (%)', zeroline: true, zerolinecolor: '#888', zerolinewidth: 1.5 },
+      shapes: [{
+        type: 'line', x0: days30[6], x1: days30[6],
+        y0: -15, y1: 15,
+        line: { color: '#e74c3c', dash: 'dash', width: 1.5 }
+      }],
+      annotations: [{
+        x: days30[6], y: -12,
+        text: '霍尔木兹<br>封锁', showarrow: false,
+        font: { size: 10, color: '#e74c3c' }
+      }],
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      legend: { orientation: 'h', y: -0.25 }
+    };
+    Plotly.newPlot('chartA4', [traceA4a, traceA4b, traceA4c], layoutA4, {responsive: true, displayModeBar: false});
+  
+  
+    var days30 = ["2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-11","2026-04-12","2026-04-13","2026-04-14","2026-04-15"];
+    var goldPrices = [4580, 4620, 4680, 4720, 4750, 4710, 4680, 4650, 4700, 4740,
+                      4760, 4780, 4790, 4810, 4830, 4820, 4800, 4790, 4810, 4820,
+                      4830, 4840, 4820, 4790, 4800, 4790, 4790, 4789, 4789, 4789];
+    var realRates = [2.45, 2.40, 2.35, 2.28, 2.22, 2.30, 2.38, 2.45, 2.35, 2.28,
+                     2.22, 2.18, 2.15, 2.10, 2.05, 2.08, 2.12, 2.15, 2.10, 2.08,
+                     2.05, 2.02, 2.05, 2.10, 2.12, 2.15, 2.18, 2.18, 2.18, 2.18];
+    var traceA5a = {
+      x: days30, y: goldPrices, name: '黄金现货($/oz)', type: 'scatter',
+      line: { color: '#f39c12', width: 2.5 }, yaxis: 'y'
+    };
+    var traceA5b = {
+      x: days30, y: realRates, name: '美国实际利率(%)', type: 'scatter',
+      line: { color: '#3498db', width: 2, dash: 'dash' }, yaxis: 'y2'
+    };
+    var layoutA5 = {
+      title: { text: '黄金 vs 美国实际利率深度对比（利率通常与黄金负相关）', font: { size: 16 } },
+      xaxis: { tickangle: -30 },
+      yaxis: { title: '黄金价格（美元/盎司）', side: 'left', color: '#f39c12' },
+      yaxis2: { title: '实际利率（%）', overlaying: 'y', side: 'right', showgrid: false, color: '#3498db' },
+      annotations: [{
+        x: days30[14], y: 4830,
+        text: '黄金异常走强<br>实际利率≈2%但金价创新高<br>→ 地缘避险溢价',
+        showarrow: true, arrowhead: 2, ax: -60, ay: -40,
+        font: { size: 10, color: '#e74c3c' },
+        bgcolor: 'rgba(255,255,200,0.9)', bordercolor: '#f39c12'
+      }],
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      legend: { orientation: 'h', y: -0.25 }
+    };
+    Plotly.newPlot('chartA5', [traceA5a, traceA5b], layoutA5, {responsive: true, displayModeBar: false});
+  
+  
+    var histDays = ["2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01"];
+    var wtiHist = [88, 90, 94, 98, 104, 99, 96, 92, 90, 91, 93, 90, 88, 89, 91, 92, 91, 92, 93, 93];
+    var futDays = ['2026-04-17','2026-04-24','2026-05-01','2026-05-08','2026-05-15','2026-05-22'];
+    var bullScen = [93, 98, 103, 108, 112, 115];    // 乐观：协议破裂，油价飙升
+    var baseScen = [93, 92, 90, 88, 86, 85];         // 中性：谈判缓慢推进
+    var bearScen = [93, 88, 82, 76, 72, 68];         // 悲观：快速达成协议
+    var fillBull = {
+      x: futDays.concat(futDays.slice().reverse()),
+      y: bullScen.concat(baseScen.slice().reverse()),
+      fill: 'toself', fillcolor: 'rgba(231,76,60,0.1)',
+      line: { color: 'transparent' }, name: '乐观-中性区间', type: 'scatter', showlegend: true
+    };
+    var fillBear = {
+      x: futDays.concat(futDays.slice().reverse()),
+      y: baseScen.concat(bearScen.slice().reverse()),
+      fill: 'toself', fillcolor: 'rgba(52,152,219,0.1)',
+      line: { color: 'transparent' }, name: '中性-悲观区间', type: 'scatter', showlegend: true
+    };
+    var traceHist = { x: histDays, y: wtiHist, name: 'WTI历史', line: { color: '#e74c3c', width: 2.5 }, mode: 'lines' };
+    var traceBull = { x: futDays, y: bullScen, name: '乐观(25%): 停火破裂$115', line: { color: '#c0392b', dash: 'dash', width: 2 } };
+    var traceBase = { x: futDays, y: baseScen, name: '中性(50%): 谈判缓慢$85', line: { color: '#f39c12', width: 2 } };
+    var traceBear = { x: futDays, y: bearScen, name: '悲观(25%): 协议达成$68', line: { color: '#27ae60', dash: 'dot', width: 2 } };
+    var layoutA6 = {
+      title: { text: 'WTI原油三情景路径预测（4-5周展望）', font: { size: 16 } },
+      xaxis: { tickangle: -30 },
+      yaxis: { title: 'WTI原油价格（美元/桶）' },
+      shapes: [{ type: 'line', x0: '2026-04-17', x1: '2026-04-17', y0: 60, y1: 120,
+                 line: { color: '#888', dash: 'dot', width: 1.5 } }],
+      annotations: [{ x: '2026-04-17', y: 115, text: '今日', showarrow: false, font: { size: 10, color: '#888' } }],
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      legend: { orientation: 'h', y: -0.28 }
+    };
+    Plotly.newPlot('chartA6', [fillBull, fillBear, traceHist, traceBull, traceBase, traceBear], layoutA6, {responsive: true, displayModeBar: false});
+  
+  
+    var days30 = ["2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01","2026-04-04","2026-04-05","2026-04-06","2026-04-07","2026-04-08","2026-04-11","2026-04-12","2026-04-13","2026-04-14","2026-04-15"];
+    var vixHistory = [32.5, 30.8, 28.6, 27.1, 25.8, 28.2, 31.5, 33.2, 30.1, 28.5,
+                      26.3, 24.8, 23.2, 25.1, 27.3, 24.6, 22.8, 21.5, 23.2, 22.1,
+                      20.8, 21.3, 22.5, 21.8, 20.9, 20.5, 21.2, 20.8, 20.6, 20.556];
+    var traceA7 = {
+      x: days30, y: vixHistory, type: 'scatter', name: 'VIX',
+      line: { color: '#8e44ad', width: 2 },
+      fill: 'tozeroy', fillcolor: 'rgba(142,68,173,0.1)'
+    };
+    var layoutA7 = {
+      title: { text: 'VIX历史分层图（当前水平在历史区间的位置）', font: { size: 16 } },
+      xaxis: { tickangle: -30 },
+      yaxis: { title: 'VIX指数', range: [10, 40] },
+      shapes: [
+        { type: 'rect', x0: days30[0], x1: days30[29], y0: 0, y1: 15,
+          fillcolor: 'rgba(39,174,96,0.08)', line: { width: 0 } },
+        { type: 'rect', x0: days30[0], x1: days30[29], y0: 15, y1: 25,
+          fillcolor: 'rgba(241,196,15,0.08)', line: { width: 0 } },
+        { type: 'rect', x0: days30[0], x1: days30[29], y0: 25, y1: 35,
+          fillcolor: 'rgba(231,76,60,0.08)', line: { width: 0 } },
+        { type: 'rect', x0: days30[0], x1: days30[29], y0: 35, y1: 50,
+          fillcolor: 'rgba(192,57,43,0.12)', line: { width: 0 } }
+      ],
+      annotations: [
+        { x: days30[1], y: 12, text: '极度平静(<15)', showarrow: false, font: { size: 9, color: '#27ae60' } },
+        { x: days30[1], y: 20, text: '正常区间(15-25)', showarrow: false, font: { size: 9, color: '#f39c12' } },
+        { x: days30[1], y: 30, text: '高波动区(25-35)', showarrow: false, font: { size: 9, color: '#e74c3c' } },
+        { x: days30[1], y: 38, text: '极度恐慌(35+)', showarrow: false, font: { size: 9, color: '#c0392b' } }
+      ],
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff'
+    };
+    Plotly.newPlot('chartA7', [traceA7], layoutA7, {responsive: true, displayModeBar: false});
+  
+  
+    var names = ["霍尔木兹长期封锁","美联储意外加息","地缘冲突升级","美元流动性危机","美股大幅调整>15%","人民币急剧贬值","通胀二次抬头","欧洲能源危机重演","奈飞财报引发科技抛售","原油突破$110"];
+    var probs = [4.5,2.8,3.5,2.2,4.2,2,5.5,3,5.8,3.8];
+    var sevs = [9.2,8.8,9.5,9,7.5,7,7.8,7.2,4.5,8];
+    var sizes = [42,38,40,35,32,28,36,30,24,34];
+    var colors = ["#e74c3c","#c0392b","#e74c3c","#8e44ad","#e67e22","#2980b9","#f39c12","#16a085","#27ae60","#e74c3c"];
+    var traceA8 = {
+      x: probs, y: sevs,
+      mode: 'markers+text',
+      text: names,
+      textposition: 'top center',
+      marker: { size: sizes, color: colors, opacity: 0.75, line: { color: '#fff', width: 1.5 } },
+      type: 'scatter',
+      hovertemplate: '<b>%{text}</b><br>可能性: %{x}/10<br>损害程度: %{y}/10<extra></extra>'
+    };
+    var layoutA8 = {
+      title: { text: '风险矩阵气泡图（可能性 × 损害程度 × 气泡大小=综合影响）', font: { size: 15 } },
+      xaxis: { title: '可能性（0-10）', range: [0, 8] },
+      yaxis: { title: '损害程度（0-10）', range: [3, 11] },
+      shapes: [
+        { type: 'rect', x0: 0, x1: 3, y0: 0, y1: 6.5,
+          fillcolor: 'rgba(39,174,96,0.06)', line: { width: 0 } },
+        { type: 'rect', x0: 3, x1: 6, y0: 6.5, y1: 11,
+          fillcolor: 'rgba(241,196,15,0.06)', line: { width: 0 } },
+        { type: 'rect', x0: 6, x1: 10, y0: 6.5, y1: 11,
+          fillcolor: 'rgba(231,76,60,0.08)', line: { width: 0 } }
+      ],
+      annotations: [
+        { x: 1.5, y: 4, text: '低优先级', showarrow: false, font: { size: 10, color: '#27ae60' } },
+        { x: 4.5, y: 10, text: '⚠️ 中等风险', showarrow: false, font: { size: 10, color: '#e67e22' } },
+        { x: 7, y: 10, text: '🔴 高风险区', showarrow: false, font: { size: 10, color: '#c0392b' } }
+      ],
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      margin: { t: 60, b: 80, l: 80, r: 30 }
+    };
+    Plotly.newPlot('chartA8', [traceA8], layoutA8, {responsive: true, displayModeBar: false});
+  
+  
+    var histDays = ["2026-03-07","2026-03-08","2026-03-09","2026-03-10","2026-03-11","2026-03-14","2026-03-15","2026-03-16","2026-03-17","2026-03-18","2026-03-21","2026-03-22","2026-03-23","2026-03-24","2026-03-25","2026-03-28","2026-03-29","2026-03-30","2026-03-31","2026-04-01"];
+    var spHist = [6420,6480,6355,6290,6180,6080,5950,5920,6050,6120,6250,6380,6520,6640,6710,6820,6850,6920,6960,6980];
+    var futWeeks = ['2026-04-17','2026-04-24','2026-05-01','2026-05-08','2026-05-15','2026-05-22','2026-05-29'];
+    var spBull  = [7041, 7120, 7250, 7380, 7500, 7620, 7750];  // 乐观：中东和平+降息
+    var spBase  = [7041, 7050, 7020, 6980, 7000, 7060, 7100];  // 中性：震荡整固
+    var spBear  = [7041, 6950, 6800, 6650, 6500, 6380, 6250];  // 悲观：奈飞引发科技抛售+通胀超预期
+    var fillA9 = {
+      x: futWeeks.concat(futWeeks.slice().reverse()),
+      y: spBull.concat(spBear.slice().reverse()),
+      fill: 'toself', fillcolor: 'rgba(52,152,219,0.08)',
+      line: { color: 'transparent' }, name: '三情景区间', type: 'scatter'
+    };
+    var traceHistA9 = { x: histDays, y: spHist, name: '历史走势', line: { color: '#2c3e50', width: 2.5 }, mode: 'lines' };
+    var traceBullA9 = { x: futWeeks, y: spBull, name: '乐观(30%): +10% $7,750', line: { color: '#e74c3c', dash: 'dash', width: 2 } };
+    var traceBaseA9 = { x: futWeeks, y: spBase, name: '中性(50%): 震荡 $7,100', line: { color: '#f39c12', width: 2.5 } };
+    var traceBearA9 = { x: futWeeks, y: spBear, name: '悲观(20%): -11% $6,250', line: { color: '#27ae60', dash: 'dot', width: 2 } };
+    var layoutA9 = {
+      title: { text: '标普500三情景路径预测（未来4-6周）', font: { size: 16 } },
+      xaxis: { tickangle: -30 },
+      yaxis: { title: '标普500指数', range: [6000, 8000] },
+      shapes: [{ type: 'line', x0: '2026-04-17', x1: '2026-04-17', y0: 6000, y1: 8000,
+                 line: { color: '#888', dash: 'dot', width: 1.5 } }],
+      annotations: [{ x: '2026-04-17', y: 7800, text: '今日', showarrow: false, font: { size: 10, color: '#888' } }],
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      legend: { orientation: 'h', y: -0.28 }
+    };
+    Plotly.newPlot('chartA9', [fillA9, traceHistA9, traceBullA9, traceBaseA9, traceBearA9], layoutA9, {responsive: true, displayModeBar: false});
+  
+  
+    var assetNames = ['标普500','纳斯达克','黄金','WTI原油','BTC','ETH','美国10Y债','EUR/USD','上证','恒生'];
+    var expectedReturn = [4.5, 6.2, 5.8, 8.2, 12.5, 10.2, 4.28, 3.5, 8.5, 9.2];
+    var riskLevel = [12.5, 18.2, 11.2, 25.5, 42.5, 55.2, 5.8, 8.5, 16.2, 20.5];
+    var attractiveness = [38, 45, 52, 28, 55, 42, 35, 40, 58, 62]; // 气泡大小
+    var assetColors = ['#e74c3c','#c0392b','#f39c12','#8e44ad','#f39c12','#3498db','#2ecc71','#1abc9c','#e74c3c','#e74c3c'];
+    var traceA10 = {
+      x: riskLevel, y: expectedReturn,
+      mode: 'markers+text', text: assetNames,
+      textposition: 'top center',
+      marker: { size: attractiveness, color: assetColors, opacity: 0.75, line: { color: '#fff', width: 1.5 } },
+      type: 'scatter',
+      hovertemplate: '<b>%{text}</b><br>预期波动率: %{x:.1f}%<br>预期收益率: %{y:.1f}%<extra></extra>'
+    };
+    // 有效前沿示意线
+    var frontierX = [5, 8, 12, 18, 25, 35, 45, 55];
+    var frontierY = [3.5, 4.5, 6.0, 7.5, 9.5, 11.5, 13.5, 16.0];
+    var traceFrontier = {
+      x: frontierX, y: frontierY, mode: 'lines', name: '有效前沿',
+      line: { color: '#bdc3c7', dash: 'dash', width: 1.5 }
+    };
+    var layoutA10 = {
+      title: { text: '风险收益气泡图（气泡大小=吸引力评分）', font: { size: 16 } },
+      xaxis: { title: '预期年化波动率 (%)' },
+      yaxis: { title: '预期年化收益率 (%)' },
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      showlegend: false,
+      margin: { t: 60, b: 60, l: 70, r: 30 }
+    };
+    Plotly.newPlot('chartA10', [traceFrontier, traceA10], layoutA10, {responsive: true, displayModeBar: false});
+  
+  
+    var indicatorNames = ['CPI同比(%)','PPI同比(%)','制造业PMI','服务业PMI','GDP增速(%)','失业率(%)'];
+    var currentVals = [3.3, 2.8, 51.2, 53.8, 2.1, 4.3];
+    var targets =     [2.0, 2.0, 52.0, 54.0, 2.5, 4.0];
+    var traceA11a = {
+      type: 'bar', x: indicatorNames, y: currentVals,
+      name: '当前值', marker: { color: currentVals.map((v, i) => v > targets[i] ? '#e74c3c' : '#27ae60') },
+      text: currentVals.map(v => v.toFixed(1)), textposition: 'outside'
+    };
+    var traceA11b = {
+      type: 'scatter', x: indicatorNames, y: targets,
+      name: '目标值', mode: 'markers+lines',
+      marker: { symbol: 'diamond', size: 10, color: '#3498db' },
+      line: { color: '#3498db', dash: 'dash', width: 1.5 }
+    };
+    var layoutA11 = {
+      title: { text: '宏观指标 vs 目标值仪表盘（超目标=红色警示）', font: { size: 16 } },
+      xaxis: { tickangle: -15 },
+      yaxis: { title: '数值' },
+      plot_bgcolor: '#fafafa', paper_bgcolor: '#fff',
+      barmode: 'group',
+      legend: { orientation: 'h', y: -0.2 },
+      annotations: [{
+        x: 0, y: 3.8, text: '⚠️ 通胀超目标<br>+1.3pp',
+        showarrow: true, arrowhead: 2, ax: 0, ay: -35,
+        font: { size: 10, color: '#c0392b' },
+        bgcolor: 'rgba(255,240,240,0.9)', bordercolor: '#e74c3c'
+      }]
+    };
+    Plotly.newPlot('chartA11', [traceA11a, traceA11b], layoutA11, {responsive: true, displayModeBar: false});
+  
+  
+    // 经济周期时钟 - 四象限
+    var theta = [];
+    var r = [];
+    var labels = ['复苏期','过热期','滞胀期','衰退期'];
+    var quadColors = ['rgba(39,174,96,0.12)','rgba(241,196,15,0.12)','rgba(231,76,60,0.12)','rgba(52,152,219,0.12)'];
 
-// ============ 图4：传导漏斗图 ============
-const funnelStages = [{"stage":"美伊谈判进展","value":100,"desc":"框架协议接近落地 / 白宫确认面谈"},{"stage":"霍尔木兹正常化","value":82,"desc":"石油运输逐步恢复 / 供应预期改善"},{"stage":"能源价格回落","value":68,"desc":"WTI从$104→$91，布伦特$102→$90"},{"stage":"通胀预期下修","value":52,"desc":"CPI预期从3.4%→3.0%，BEI利率下行"},{"stage":"降息预期前移","value":42,"desc":"市场首降预期从12月→9月概率上升"},{"stage":"利率曲线趋陡","value":32,"desc":"2Y-10Y利差+51bp，长端收益率略降"},{"stage":"风险资产受益","value":25,"desc":"科技股/成长股/新兴市场获益"}];
-Plotly.newPlot('chart-funnel',[{
-  type:'funnel',y:funnelStages.map(d=>d.stage),x:funnelStages.map(d=>d.value),
-  text:funnelStages.map(d=>d.desc),
-  textposition:'inside',
-  marker:{color:['#bc8cff','#9b79e8','#7b66d2','#5a52b8','#3e3ea0','#2a9d8f','#1e7a5e'],opacity:0.9},
-  connector:{line:{color:'#30363d',width:1}},
-  hovertemplate:'%{y}<br>%{x}<br>%{text}<extra></extra>'
-}],{
-  title:{text:'美伊谈判进展 → 资产价格传导链条',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',
-  font:{color:'#c9d1d9',size:12},
-  margin:{t:50,b:40,l:120,r:20},height:380
-});
+    // 四个象限区域
+    var traces = labels.map((label, i) => {
+      var startAngle = i * 90 - 45;
+      var endAngle = startAngle + 90;
+      var thetaRange = [];
+      var rRange = [];
+      for (var a = startAngle; a <= endAngle; a += 5) {
+        thetaRange.push(a);
+        rRange.push(1.0);
+      }
+      thetaRange.push(startAngle);
+      rRange.push(0);
+      return {
+        type: 'scatterpolar',
+        r: [1, 1, 0, 1],
+        theta: [startAngle, endAngle, (startAngle + endAngle) / 2, startAngle],
+        fill: 'toself', fillcolor: quadColors[i],
+        line: { color: '#ccc', width: 1 },
+        name: label,
+        mode: 'lines+text',
+        text: ['', label, '', ''],
+        textposition: 'outside'
+      };
+    });
 
-// ============ 图5：资产估值百分位 ============
-const valLabels = ["标普500 PE","标普500 PB","纳斯达克PE","A股沪深300PE","港股恒生PE","黄金实际价格","股债比价(E/Y)","BTC/黄金比"];
-const valPct    = [76,70,68,44,36,89,56,57];
-const valColors = valPct.map(v => v>=80?'#e63946':v>=60?'#ff9f1c':v>=40?'#58a6ff':'#2a9d8f');
-Plotly.newPlot('chart-valuation',[{
-  type:'bar',orientation:'h',
-  x:valPct, y:valLabels,
-  marker:{color:valColors,opacity:0.85},
-  text:valPct.map(v=>v+'%'),textposition:'outside',
-  hovertemplate:'%{y}<br>历史百分位：%{x}%<extra></extra>'
-}],{
-  title:{text:'主要资产估值历史百分位',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  xaxis:{title:'历史百分位（%）',range:[0,110],gridcolor:'#21262d',
-         tickvals:[25,50,75,100],ticktext:['25%低估','50%合理','75%偏贵','100%极贵']},
-  yaxis:{tickfont:{color:'#c9d1d9',size:11}},
-  margin:{t:50,b:60,l:120,r:80},height:320,
-  shapes:[
-    {type:'line',x0:75,x1:75,y0:-0.5,y1:7.5,line:{color:'#e63946',width:1,dash:'dot'}},
-    {type:'line',x0:50,x1:50,y0:-0.5,y1:7.5,line:{color:'#58a6ff',width:1,dash:'dot'}},
-  ]
-});
+    // 当前位置指针（滞胀区）
+    var currentAngle = 115; // 过热→滞胀过渡期
+    var currentTrace = {
+      type: 'scatterpolar',
+      r: [0, 0.85],
+      theta: [0, currentAngle],
+      mode: 'lines+markers',
+      line: { color: '#e74c3c', width: 3 },
+      marker: { size: [0, 12], color: '#e74c3c', symbol: ['circle', 'arrow'] },
+      name: '当前位置',
+      hovertemplate: '当前经济周期位置<br>→ 过热期末/滞胀风险区<extra></extra>'
+    };
 
-// ============ 图6：风险收益气泡图 ============
-const ab = [{"name":"标普500","ret":7.8,"risk":15,"size":26,"region":"美股"},{"name":"纳斯达克","ret":10.2,"risk":23,"size":22,"region":"美股"},{"name":"A股","ret":11.5,"risk":18.5,"size":22,"region":"亚太"},{"name":"港股","ret":13.2,"risk":22,"size":20,"region":"亚太"},{"name":"日经225","ret":9.1,"risk":17.5,"size":17,"region":"亚太"},{"name":"黄金","ret":5.5,"risk":12.5,"size":16,"region":"大宗"},{"name":"WTI原油","ret":2.8,"risk":30,"size":12,"region":"大宗"},{"name":"BTC","ret":19.5,"risk":58,"size":12,"region":"加密"},{"name":"10Y美债","ret":4.22,"risk":6.5,"size":18,"region":"债券"},{"name":"新兴市场","ret":12.5,"risk":24,"size":17,"region":"新兴"}];
-const regionColors = {'美股':'#e63946','亚太':'#ff9f1c','大宗':'#ffd700','加密':'#bc8cff','债券':'#2a9d8f','新兴':'#58a6ff'};
-const regionGroups = {};
-ab.forEach(d => { if(!regionGroups[d.region]) regionGroups[d.region]=[]; regionGroups[d.region].push(d); });
-const bubbleTraces = Object.entries(regionGroups).map(([region,items])=>({
-  type:'scatter',mode:'markers+text',name:region,
-  x:items.map(d=>d.risk), y:items.map(d=>d.ret),
-  text:items.map(d=>d.name), textposition:'top center',
-  marker:{size:items.map(d=>d.size),color:regionColors[region]||'#888',opacity:0.75,sizemode:'area'},
-  hovertemplate:'%{text}<br>风险(年化波动)：%{x:.1f}%<br>预期收益：%{y:.1f}%<extra></extra>'
-}));
-Plotly.newPlot('chart-bubble', bubbleTraces,{
-  title:{text:'资产风险收益气泡图（圆圈大小=仓位吸引力）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  legend:{bgcolor:'rgba(0,0,0,0)',font:{color:'#c9d1d9',size:11}},
-  xaxis:{title:'年化波动率（风险）%',gridcolor:'#21262d'},
-  yaxis:{title:'预期收益率%',gridcolor:'#21262d'},
-  margin:{t:50,b:60,l:60,r:20},height:320
-});
-
-// ============ 图7：扩展资产相关性热力图 ============
-const extAssets = ["标普500","纳斯达克","A股","港股","日经","黄金","WTI","BTC","美元","10Y债"];
-const extCorr   = [[1,0.97,0.45,0.58,0.7,0.15,-0.2,0.62,-0.7,-0.44],[0.97,1,0.4,0.54,0.67,0.1,-0.18,0.64,-0.74,-0.46],[0.45,0.4,1,0.75,0.48,0.28,0.2,0.38,-0.5,-0.3],[0.58,0.54,0.75,1,0.55,0.3,0.15,0.42,-0.58,-0.38],[0.7,0.67,0.48,0.55,1,0.18,-0.1,0.48,-0.6,-0.32],[0.15,0.1,0.28,0.3,0.18,1,-0.4,0.28,-0.8,0.18],[-0.2,-0.18,0.2,0.15,-0.1,-0.4,1,-0.12,0.57,-0.22],[0.62,0.64,0.38,0.42,0.48,0.28,-0.12,1,-0.5,-0.32],[-0.7,-0.74,-0.5,-0.58,-0.6,-0.8,0.57,-0.5,1,0.24],[-0.44,-0.46,-0.3,-0.38,-0.32,0.18,-0.22,-0.32,0.24,1]];
-Plotly.newPlot('chart-corr-ext',[{
-  type:'heatmap',z:extCorr,x:extAssets,y:extAssets,
-  colorscale:[['0','#2a9d8f'],['0.5','#1c2333'],['1','#e63946']],
-  zmid:0,zmin:-1,zmax:1,
-  text:extCorr.map(row=>row.map(v=>v.toFixed(2))),
-  texttemplate:'%{text}',textfont:{size:9},
-  hovertemplate:'%{x} vs %{y}<br>相关性：%{z:.2f}<extra></extra>'
-}],{
-  title:{text:'全球资产相关性热力图（10资产扩展版）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',
-  font:{color:'#8b949e',size:9},
-  margin:{t:50,b:100,l:80,r:20},height:360
-});
-
-// ============ 图8：风险矩阵气泡图 ============
-const rm = [{"name":"纳指超买技术调整","prob":62,"impact":55,"size":18},{"name":"美伊谈判破裂","prob":32,"impact":88,"size":22},{"name":"美联储鹰派意外","prob":28,"impact":75,"size":18},{"name":"中国房地产进一步恶化","prob":35,"impact":65,"size":14},{"name":"AI泡沫局部破裂","prob":22,"impact":82,"size":20},{"name":"商业地产危机","prob":35,"impact":78,"size":15},{"name":"欧洲经济衰退","prob":42,"impact":58,"size":13},{"name":"人民币快速升值冲击","prob":25,"impact":48,"size":10},{"name":"加密市场剧烈波动","prob":30,"impact":42,"size":11},{"name":"黑天鹅地缘事件","prob":12,"impact":96,"size":26}];
-Plotly.newPlot('chart-risk-matrix',[{
-  type:'scatter',mode:'markers+text',
-  x:rm.map(d=>d.impact), y:rm.map(d=>d.prob),
-  text:rm.map(d=>d.name), textposition:'top center',
-  marker:{
-    size:rm.map(d=>d.size),sizemode:'area',
-    color:rm.map(d=>d.prob*d.impact/100),
-    colorscale:[['0','#2a9d8f'],['0.5','#ff9f1c'],['1','#e63946']],
-    opacity:0.8,
-    colorbar:{title:'综合风险',thickness:8,titlefont:{color:'#8b949e'},tickfont:{color:'#8b949e'}}
-  },
-  hovertemplate:'%{text}<br>冲击程度：%{x}<br>发生概率：%{y}%<extra></extra>'
-}],{
-  title:{text:'风险矩阵（可能性 × 损害程度）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  xaxis:{title:'损害程度（0–100）',gridcolor:'#21262d',range:[30,110]},
-  yaxis:{title:'发生概率（%）',gridcolor:'#21262d',range:[5,80]},
-  shapes:[
-    {type:'rect',x0:70,x1:110,y0:40,y1:80,fillcolor:'rgba(230,57,70,0.06)',line:{width:0}},
-    {type:'line',x0:70,x1:70,y0:5,y1:80,line:{color:'#ff9f1c',width:1,dash:'dot'}},
-    {type:'line',x0:30,x1:110,y0:40,y1:40,line:{color:'#ff9f1c',width:1,dash:'dot'}},
-  ],
-  margin:{t:50,b:60,l:60,r:20},height:380
-});
-
-// ============ 图9：VIX历史分层 ============
-const vixH = [18,19,21,20,18,19,22,25,28,32,30,27,25,24,22,21,22,24,26,25,23,21,20,19,21,23,25,27,28,30,31,29,27,25,24,23,22,21,22,24,26,28,30,32,29,27,24,22,20,21,23,25,24,23,22,20,21,23,22,21];
-const vixD = ["D1","D2","D3","D4","D5","D6","D7","D8","D9","D10","D11","D12","D13","D14","D15","D16","D17","D18","D19","D20","D21","D22","D23","D24","D25","D26","D27","D28","D29","D30","D31","D32","D33","D34","D35","D36","D37","D38","D39","D40","D41","D42","D43","D44","D45","D46","D47","D48","D49","D50","D51","D52","D53","D54","D55","D56","D57","D58","D59","D60"];
-Plotly.newPlot('chart-vix-hist',[
-  {type:'scatter',mode:'lines',name:'VIX历史',x:vixD,y:vixH,
-   fill:'tozeroy',fillcolor:'rgba(255,159,28,0.08)',
-   line:{color:'#ff9f1c',width:1.5},
-   hovertemplate:'%{x}<br>VIX：%{y:.1f}<extra></extra>'},
-  {type:'scatter',mode:'lines',name:'恐慌(30)',x:vixD,y:Array(60).fill(30),
-   line:{color:'#e63946',width:1,dash:'dash'},hoverinfo:'skip'},
-  {type:'scatter',mode:'lines',name:'警戒(20)',x:vixD,y:Array(60).fill(20),
-   line:{color:'#ff9f1c',width:1,dash:'dot'},hoverinfo:'skip'},
-  {type:'scatter',mode:'lines',name:'平稳(15)',x:vixD,y:Array(60).fill(15),
-   line:{color:'#2a9d8f',width:1,dash:'dot'},hoverinfo:'skip'},
-  {type:'scatter',mode:'markers',name:'当前(20.5)',x:[vixD[vixD.length-1]],y:[20.5],
-   marker:{size:10,color:'#bc8cff',symbol:'star'},
-   hovertemplate:'当前VIX：20.5<extra></extra>'},
-],{
-  title:{text:'VIX恐慌指数历史分层（近60交易日）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  legend:{bgcolor:'rgba(0,0,0,0)',font:{color:'#c9d1d9',size:10}},
-  xaxis:{gridcolor:'#21262d',tickangle:-45,tickfont:{size:8}},
-  yaxis:{gridcolor:'#21262d'},
-  margin:{t:50,b:70,l:50,r:20},height:380
-});
-
-// ============ 图10：美股修正深度 ============
-const corW = ["W1","W2","W3","W4","W5","W6","W7","W8","W9","W10","W11","W12"];
-Plotly.newPlot('chart-correction',[
-  {type:'scatter',mode:'lines+markers',name:'标普500',x:corW,y:[-0.5,-1.2,-3.8,-5.8,-7.2,-6.3,-4.9,-3.1,-1.8,-0.9,-0.4,-0.1],
-   line:{color:'#58a6ff',width:2},marker:{size:5},
-   hovertemplate:'标普500：%{y:.1f}%<extra></extra>'},
-  {type:'scatter',mode:'lines+markers',name:'纳斯达克',x:corW,y:[-0.8,-1.8,-5.2,-7.8,-9.1,-8,-6.2,-4,-2.3,-1.2,-0.6,-0.2],
-   line:{color:'#bc8cff',width:2},marker:{size:5},
-   hovertemplate:'纳斯达克：%{y:.1f}%<extra></extra>'},
-  {type:'scatter',mode:'lines+markers',name:'道琼斯',x:corW,y:[-0.3,-0.9,-2.9,-4.5,-5.6,-4.9,-3.8,-2.4,-1.4,-0.7,-0.3,-0.1],
-   line:{color:'#ffd700',width:2},marker:{size:5},
-   hovertemplate:'道琼斯：%{y:.1f}%<extra></extra>'},
-],{
-  title:{text:'美股三指数修正深度（近12周最大回撤）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  legend:{bgcolor:'rgba(0,0,0,0)',font:{color:'#c9d1d9'}},
-  xaxis:{gridcolor:'#21262d'},
-  yaxis:{ticksuffix:'%',gridcolor:'#21262d',zerolinecolor:'#30363d'},
-  margin:{t:50,b:50,l:60,r:20},height:300
-});
-
-// ============ 图11：标普500三情景路径 ============
-const scWeeks = ["当前","4W","8W","12W"];
-Plotly.newPlot('chart-sp500-scenario',[
-  {type:'scatter',mode:'lines+markers',name:'乐观(35%)：协议+AI',x:scWeeks,y:[7023,7350,7650,8000],
-   line:{color:'#e63946',width:2.5},marker:{size:7},
-   hovertemplate:'乐观：%{y:,}<extra></extra>'},
-  {type:'scatter',mode:'lines+markers',name:'中性(45%)：缓慢推进',x:scWeeks,y:[7023,7100,7200,7300],
-   line:{color:'#58a6ff',width:2.5},marker:{size:7},
-   hovertemplate:'中性：%{y:,}<extra></extra>'},
-  {type:'scatter',mode:'lines+markers',name:'悲观(20%)：谈判破裂',x:scWeeks,y:[7023,6750,6450,6200],
-   line:{color:'#2a9d8f',width:2.5},marker:{size:7},
-   hovertemplate:'悲观：%{y:,}<extra></extra>'},
-],{
-  title:{text:'标普500三情景路径预测（4周/8周/12周）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  legend:{bgcolor:'rgba(0,0,0,0)',font:{color:'#c9d1d9'}},
-  xaxis:{gridcolor:'#21262d'},
-  yaxis:{gridcolor:'#21262d',tickformat:','},
-  margin:{t:50,b:50,l:70,r:20},height:320
-});
-
-// ============ 图12：原油三情景 ============
-const oilW = ["当前","1W","2W","4W","8W"];
-Plotly.newPlot('chart-oil-scenario',[
-  {type:'scatter',mode:'lines+markers',name:'乐观(20%)：谈判破裂',x:oilW,y:[91.39,98,105,112,118],
-   line:{color:'#e63946',width:2.5},marker:{size:7},
-   hovertemplate:'乐观油价：$%{y:.1f}<extra></extra>'},
-  {type:'scatter',mode:'lines+markers',name:'中性(50%)：渐进缓和',x:oilW,y:[91.39,90,88,85,83],
-   line:{color:'#ff9f1c',width:2.5},marker:{size:7},
-   hovertemplate:'中性油价：$%{y:.1f}<extra></extra>'},
-  {type:'scatter',mode:'lines+markers',name:'悲观(30%)：协议落地',x:oilW,y:[91.39,85,78,70,65],
-   line:{color:'#2a9d8f',width:2.5},marker:{size:7},
-   hovertemplate:'悲观油价：$%{y:.1f}<extra></extra>'},
-],{
-  title:{text:'WTI原油三情景预测（附概率）',font:{color:'#f0f6fc',size:13}},
-  paper_bgcolor:'#161b22',plot_bgcolor:'#161b22',font:{color:'#8b949e'},
-  legend:{bgcolor:'rgba(0,0,0,0)',font:{color:'#c9d1d9'}},
-  xaxis:{gridcolor:'#21262d'},
-  yaxis:{title:'$/桶',gridcolor:'#21262d'},
-  shapes:[{type:'line',x0:oilW[0],x1:oilW[oilW.length-1],y0:91.39,y1:91.39,
-           line:{color:'rgba(255,255,255,0.2)',width:1,dash:'dot'}}],
-  margin:{t:50,b:50,l:60,r:20},height:320
-});
+    var layoutA12 = {
+      title: { text: '经济周期时钟（当前位置：过热→滞胀过渡）', font: { size: 16 } },
+      polar: {
+        radialaxis: { visible: false, range: [0, 1.2] },
+        angularaxis: {
+          visible: true, direction: 'clockwise', period: 4,
+          tickmode: 'array', tickvals: [0, 90, 180, 270],
+          ticktext: ['↑ GDP正缺口', '→ 通胀走高', '↓ GDP负缺口', '← 通胀回落'],
+          tickfont: { size: 11 }
+        }
+      },
+      annotations: [{
+        x: 0.85, y: 0.85, xref: 'paper', yref: 'paper',
+        text: '🔴 当前<br>滞胀风险',
+        font: { size: 11, color: '#e74c3c' },
+        showarrow: false,
+        bgcolor: 'rgba(255,240,240,0.9)',
+        bordercolor: '#e74c3c', borderwidth: 1
+      }],
+      showlegend: true, legend: { orientation: 'h', y: -0.1 },
+      paper_bgcolor: '#fff'
+    };
+    traces.push(currentTrace);
+    Plotly.newPlot('chartA12', traces, layoutA12, {responsive: true, displayModeBar: false});
+  
+}());
 </script>
+
 </body>
 </html>
